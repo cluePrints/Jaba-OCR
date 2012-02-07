@@ -1,22 +1,32 @@
 package net.sourceforge.javaocr;
 
-import java.util.Arrays;
-import java.util.List;
+import java.io.File;
 
 import net.sourceforge.javaocr.gui.meanSquareOCR.TrainingImageSpec;
 import net.sourceforge.javaocr.ocrPlugins.mseOCR.CharacterRange;
 
 public enum TrainingCase {
-	DIGITS(){
-		@Override
-		public List<TrainingImageSpec> images() {
-			TrainingImageSpec newImage = new TrainingImageSpec();
-			newImage.setFileLocation("ocrTests/trainingImages/digits.jpg");
-			newImage.setCharRange(new CharacterRange((int) '0', (int) '9'));
-			List<TrainingImageSpec> imgs = Arrays.asList(newImage);
-			return imgs;
-		}
-	};
+	DIGITS("ocrTests/trainingImages/digits.jpg", '0', '9'),
+	DIGITS_HANDWRITTEN("handwritingTests/TrainingImages/zeroToNine.jpg", '0','9');
 	
-	public abstract List<TrainingImageSpec> images();
+	private final String path;
+	private final char rangeStart;
+	private final char rangeEnd;
+	
+	private TrainingCase(String path, char rangeStart, char rangeEnd) {
+		this.path = path;
+		this.rangeStart = rangeStart;
+		this.rangeEnd = rangeEnd;
+	}
+
+	public TrainingImageSpec image() {
+		TrainingImageSpec newImage = new TrainingImageSpec();
+		newImage.setFileLocation(path);
+		newImage.setCharRange(new CharacterRange((int) rangeStart, rangeEnd));
+		return newImage;
+	}
+	
+	public File imageFile() {
+		return new File(path);
+	}
 }
