@@ -101,8 +101,7 @@ public class CharacterExtractor extends DocumentScannerListenerAdaptor
             g.dispose();
 
             //Save new image to file
-            File outputfile = new File(outputDir + File.separator + "char_" + num + ".png");
-            ImageIO.write(normalizedImage, "png", outputfile);
+            handleNormalizedSingleCharacterImage(normalizedImage);
             num++;
         }
         catch (Exception ex)
@@ -110,5 +109,11 @@ public class CharacterExtractor extends DocumentScannerListenerAdaptor
             Logger.getLogger(CharacterExtractor.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+
+	protected void handleNormalizedSingleCharacterImage(BufferedImage normalizedImage) throws IOException {
+		File outputfile = new File(outputDir + File.separator + "char_" + num + ".png");
+		ImageIO.write(normalizedImage, "png", outputfile);
+	}
+	
     private static final Logger LOG = Logger.getLogger(CharacterExtractor.class.getName());
 }
