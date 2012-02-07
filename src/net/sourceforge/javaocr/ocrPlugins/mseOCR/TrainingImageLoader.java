@@ -15,7 +15,9 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.logging.Logger;
+
 import net.sourceforge.javaocr.scanner.DocumentScanner;
 import net.sourceforge.javaocr.scanner.DocumentScannerListenerAdaptor;
 import net.sourceforge.javaocr.scanner.PixelImage;
@@ -31,7 +33,7 @@ public class TrainingImageLoader extends DocumentScannerListenerAdaptor
 {
 
     private int charValue = 0;
-    private HashMap<Character, ArrayList<TrainingImage>> dest;
+    private HashMap<Character, List<TrainingImage>> dest;
     private boolean debug = false;
     private DocumentScanner documentScanner = new DocumentScanner();
 
@@ -64,7 +66,7 @@ public class TrainingImageLoader extends DocumentScannerListenerAdaptor
      * images.
      * @throws IOException
      */
-    public void load(Component component, String imageFilename, CharacterRange charRange, HashMap<Character, ArrayList<TrainingImage>> dest)
+    public void load(Component component, String imageFilename, CharacterRange charRange, HashMap<Character, List<TrainingImage>> dest)
             throws IOException
     {
 
@@ -86,7 +88,7 @@ public class TrainingImageLoader extends DocumentScannerListenerAdaptor
             Component component,
             Image image,
             CharacterRange charRange,
-            HashMap<Character, ArrayList<TrainingImage>> dest,
+            HashMap<Character, List<TrainingImage>> dest,
             String imageFilename)
             throws IOException
     {
@@ -145,7 +147,7 @@ public class TrainingImageLoader extends DocumentScannerListenerAdaptor
             System.out.println();
         }
         Character chr = new Character((char) charValue);
-        ArrayList<TrainingImage> al = dest.get(chr);
+        List<TrainingImage> al = dest.get(chr);
         if (al == null)
         {
             al = new ArrayList<TrainingImage>();

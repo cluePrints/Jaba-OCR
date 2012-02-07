@@ -15,24 +15,27 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import javax.imageio.ImageIO;
 import javax.swing.UIManager;
+
 import net.sourceforge.javaocr.gui.characterTracer.TracerFrame;
 import net.sourceforge.javaocr.gui.handwritingRecognizer.ConfigPanel;
 import net.sourceforge.javaocr.gui.handwritingRecognizer.HandWritingFormProcessor;
 import net.sourceforge.javaocr.gui.handwritingRecognizer.ProcessPanel;
 import net.sourceforge.javaocr.gui.handwritingRecognizer.TrainingPanel;
 import net.sourceforge.javaocr.gui.meanSquareOCR.TrainingImageSpec;
-import net.sourceforge.javaocr.ocrPlugins.mseOCR.OCRScanner;
-import net.sourceforge.javaocr.ocrPlugins.mseOCR.TrainingImageLoader;
 import net.sourceforge.javaocr.ocrPlugins.CharacterExtractor;
 import net.sourceforge.javaocr.ocrPlugins.CharacterTracer;
 import net.sourceforge.javaocr.ocrPlugins.LineExtractor;
 import net.sourceforge.javaocr.ocrPlugins.handWriting.HandwritingOCR;
 import net.sourceforge.javaocr.ocrPlugins.mseOCR.CharacterRange;
+import net.sourceforge.javaocr.ocrPlugins.mseOCR.OCRScanner;
 import net.sourceforge.javaocr.ocrPlugins.mseOCR.TrainingImage;
+import net.sourceforge.javaocr.ocrPlugins.mseOCR.TrainingImageLoader;
 
 /**
  * Allows all GUI elements to be controlled.
@@ -98,10 +101,10 @@ public class GUIController
         mainFrame.repaint();
     }
 
-    public String performMSEOCR(ArrayList<TrainingImageSpec> imgs, String targImageLoc) throws Exception
+    public String performMSEOCR(List<TrainingImageSpec> imgs, String targImageLoc) throws Exception
     {
         OCRScanner ocrScanner = new OCRScanner();
-        HashMap<Character, ArrayList<TrainingImage>> trainingImages = getTrainingImageHashMap(imgs);
+        HashMap<Character, List<TrainingImage>> trainingImages = getTrainingImageHashMap(imgs);
         ocrScanner.addTrainingImages(trainingImages);
         BufferedImage targetImage = ImageIO.read(new File(targImageLoc));
         String text = ocrScanner.scan(targetImage, 0, 0, 0, 0, null);
@@ -153,7 +156,7 @@ public class GUIController
             linesUsed++;
         }
 
-        HashMap<Character, ArrayList<TrainingImage>> trainingImages = getTrainingImageHashMap(imgs);
+        HashMap<Character, List<TrainingImage>> trainingImages = getTrainingImageHashMap(imgs);
         HandwritingOCR handwritingOCR = new HandwritingOCR(trainingImages);
 
         handwritingOCR.setEnableMSEOCR(form.isMSEOCR());
@@ -194,10 +197,10 @@ public class GUIController
         tFrame.showFrame();
     }
 
-    private HashMap<Character, ArrayList<TrainingImage>> getTrainingImageHashMap(ArrayList<TrainingImageSpec> imgs) throws Exception
+    private HashMap<Character, List<TrainingImage>> getTrainingImageHashMap(List<TrainingImageSpec> imgs) throws Exception
     {
         TrainingImageLoader loader = new TrainingImageLoader();
-        HashMap<Character, ArrayList<TrainingImage>> trainingImages = new HashMap<Character, ArrayList<TrainingImage>>();
+        HashMap<Character, List<TrainingImage>> trainingImages = new HashMap<Character, List<TrainingImage>>();
         Frame frame = new Frame();
 
         for (int i = 0; i < imgs.size(); i++)

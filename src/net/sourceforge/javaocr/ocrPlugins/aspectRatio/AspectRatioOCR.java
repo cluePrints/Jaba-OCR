@@ -10,8 +10,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Stack;
 import java.util.logging.Logger;
+
 import net.sourceforge.javaocr.ocrPlugins.mseOCR.TrainingImage;
 import net.sourceforge.javaocr.scanner.DocumentScanner;
 import net.sourceforge.javaocr.scanner.DocumentScannerListenerAdaptor;
@@ -30,11 +32,11 @@ public class AspectRatioOCR extends DocumentScannerListenerAdaptor implements Ac
 {
 
     private AccuracyListener listener;
-    private final HashMap<Character, ArrayList<TrainingImage>> trainingImages;
+    private final HashMap<Character, List<TrainingImage>> trainingImages;
     private final ArrayList<CharacterRatio> charRatioList = new ArrayList<CharacterRatio>();
     private DocumentScanner documentScanner = new DocumentScanner();
 
-    public AspectRatioOCR(HashMap<Character, ArrayList<TrainingImage>> trainingImages)
+    public AspectRatioOCR(HashMap<Character, List<TrainingImage>> trainingImages)
     {
         this.trainingImages = trainingImages;
         processTrainingImages();
@@ -97,7 +99,7 @@ public class AspectRatioOCR extends DocumentScannerListenerAdaptor implements Ac
         for (Iterator<Character> it = trainingImages.keySet().iterator(); it.hasNext();)
         {
             Character key = it.next();
-            ArrayList<TrainingImage> charTrainingImages = trainingImages.get(key);
+            List<TrainingImage> charTrainingImages = trainingImages.get(key);
             if (charTrainingImages != null)
             {
                 for (int i = 0; i < charTrainingImages.size(); i++)

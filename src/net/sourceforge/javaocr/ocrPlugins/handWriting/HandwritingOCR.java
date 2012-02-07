@@ -8,8 +8,10 @@ package net.sourceforge.javaocr.ocrPlugins.handWriting;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import net.sourceforge.javaocr.ocrPlugins.aspectRatio.AspectRatioOCR;
 import net.sourceforge.javaocr.ocrPlugins.mseOCR.OCRScanner;
 import net.sourceforge.javaocr.ocrPlugins.mseOCR.TrainingImage;
@@ -24,7 +26,7 @@ import net.sourceforge.javaocr.scanner.accuracy.OCRIdentification;
 public class HandwritingOCR implements AccuracyListener
 {
 
-    private final HashMap<Character, ArrayList<TrainingImage>> trainingImages;
+    private final HashMap<Character, List<TrainingImage>> trainingImages;
     private boolean isDoMSE;
     private boolean isDoAspect;
     private boolean isDoNeural;
@@ -32,7 +34,7 @@ public class HandwritingOCR implements AccuracyListener
     private final ArrayList<OCRIdentification> aspectCharIdentList;
     private final ArrayList<OCRIdentification> neuralCharIdentList;
 
-    public HandwritingOCR(HashMap<Character, ArrayList<TrainingImage>> trainingImages)
+    public HandwritingOCR(HashMap<Character, List<TrainingImage>> trainingImages)
     {
         this.trainingImages = trainingImages;
         this.mseCharIdentList = new ArrayList<OCRIdentification>();

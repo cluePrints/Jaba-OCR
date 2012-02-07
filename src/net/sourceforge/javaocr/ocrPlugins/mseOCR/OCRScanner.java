@@ -10,7 +10,9 @@ import java.awt.Image;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.logging.Logger;
+
 import net.sourceforge.javaocr.scanner.DocumentScanner;
 import net.sourceforge.javaocr.scanner.DocumentScannerListenerAdaptor;
 import net.sourceforge.javaocr.scanner.PixelImage;
@@ -32,7 +34,7 @@ public class OCRScanner extends DocumentScannerListenerAdaptor implements Accura
     private boolean beginningOfRow = false;
     private boolean firstRow = false;
     private String newline = System.getProperty("line.separator");
-    private HashMap<Character, ArrayList<TrainingImage>> trainingImages = new HashMap<Character, ArrayList<TrainingImage>>();
+    private HashMap<Character, List<TrainingImage>> trainingImages = new HashMap<Character, List<TrainingImage>>();
     private Character[] bestChars = new Character[BEST_MATCH_STORE_COUNT];
     private double[] bestMSEs = new double[BEST_MATCH_STORE_COUNT];
     private DocumentScanner documentScanner = new DocumentScanner();
@@ -67,13 +69,13 @@ public class OCRScanner extends DocumentScannerListenerAdaptor implements Accura
      * <code>TrainingImages</code> for the specified character.  The training
      * images are added to any that may already have been loaded.
      */
-    public void addTrainingImages(HashMap<Character, ArrayList<TrainingImage>> images)
+    public void addTrainingImages(HashMap<Character, ? extends List<TrainingImage>> images)
     {
         for (Iterator<Character> it = images.keySet().iterator(); it.hasNext();)
         {
             Character key = it.next();
-            ArrayList<TrainingImage> al = images.get(key);
-            ArrayList<TrainingImage> oldAl = trainingImages.get(key);
+            List<TrainingImage> al = images.get(key);
+            List<TrainingImage> oldAl = trainingImages.get(key);
             if (oldAl == null)
             {
                 oldAl = new ArrayList<TrainingImage>();
@@ -194,7 +196,7 @@ public class OCRScanner extends DocumentScannerListenerAdaptor implements Accura
         while (it.hasNext())
         {
             Character ch = it.next();
-            ArrayList<TrainingImage> al = trainingImages.get(ch);
+            List<TrainingImage> al = trainingImages.get(ch);
             int nimg = al.size();
             if (nimg > 0)
             {
